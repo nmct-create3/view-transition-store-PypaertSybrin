@@ -29,6 +29,8 @@
   --font-weight-normal: 300;
   --font-weight-bold: 400;
 
+  --global-root-font-size: 18px;
+
   --font-size-base: 1rem;
   --font-size-l: 1.5rem;
   --font-size-xl: 2.25rem;
@@ -84,7 +86,13 @@
   Set the global text color and background color with the custom properties
 */
 
-html {}
+html {
+  font-family: 'neue-haas-unica', sans-serif;
+  line-height: 1.5;
+  font-size: calc(100% * (var(--global-root-font-size) / 1rem));
+  color: var(--neutral-800);
+  background-color: var(--page-background-color);
+}
 
 ::selection {
   background-color: var(--lilac);
@@ -113,23 +121,33 @@ ul:not([class]) {
 h1,
 h2,
 h3,
-h4 {}
+h4 {
+  font-weight: 300;
+}
 
 /* set the h2 to a font-size xl and the correct line-height */
 
-h2 {}
+h2 {
+  font-size: var(--font-size-xl);
+}
 
 /* Links */
 
 /* all links should have a color of --blue, provide a hover effect */
 
-a {}
+a {
+  color: var(--meta-text-color);
+}
 
-a:hover {}
+a:hover {
+  color: var(--blue);
+}
 
 /* Other elements */
 
-hr {}
+hr {
+
+}
 
 /*
   Reusable objects
@@ -137,23 +155,41 @@ hr {}
 
 /* Containers to add a max width and center content */
 
-.container {}
+.container {
+  max-width: 90rem;
+  margin: 0 auto;
+  text-align: center;
+}
 
 /* Rows to add whitespace around child elements */
 
-.row {}
+.row {
+  margin: var(--space-s);
+}
 
-.row--xl {}
+.row--xl {
+  margin: var(--space-xl);
+}
 
-.row--xxl {}
+.row--xxl {
+  margin: var(--space-xxl);
+}
 
 /* lists */
 
-.list-reset {}
+.list-reset {
+  list-style-type: none;
+  text-decoration: none;
+}
+.link-reset{
+  text-decoration: none;
+}
 
 /* Everything inside content should have some space at the top when it's adjacent to another element */
 
-.content>*+* {}
+.content>*+* {
+  margin-top: var(--space-s);
+}
 
 /* Images */
 
@@ -183,32 +219,73 @@ hr {}
 
 .header {}
 
-.header__logo {}
+.header__logo {
+  width: 100%;
+}
 
 .header__wrapper {
-
-  @media screen and (min-width: 40em) {}
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 
+  "a b"
+  "c c"
+  ;
+  @media (min-width: 40em) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: "a b c";
+  }
+  
+  /* @media screen and (min-width: 40em) {
+    grid-template-columns: repeat(3, 1fr);
+  } */
 }
 
-.header__title {}
+.header__title {
+  text-align: left;
+  font-size: inherit;
+}
 
 .header__nav {
+  grid-area: c;
 
-  @media screen and (min-width: 40em) {}
+  @media (min-width: 40em) {
+    align-self: flex-end;
+    justify-self: center;
+    grid-area: b;
+  }
+  
+
+  @media screen and (min-width: 40em) {
+    align-self: flex-end;
+    justify-self: center;
+  }
 }
 
-.header__logo {}
+.header__logo {
+  justify-self: end;
+  width: 54px;
+}
 
 /* Navigation */
 
-.nav__list {}
+.nav__list {
+  display: flex;
+  gap: var(--space-s)
+}
 
 .nav__item {}
 
-.nav__link {}
+.nav__link {
+  text-decoration: none;
+}
 
 .nav__link:hover,
-.nav__link--active {}
+.nav__link--active {
+  color: var(--blue);
+  border-bottom: 1px solid var(--blue);
+}
 
 .nav__active {}
 
@@ -216,26 +293,44 @@ hr {}
 
 .category+.category {}
 
-.category__header {}
+.category__header {
+  display: flex;
+  justify-content: space-between;
+}
 
 /* Products */
 
 .products {
-  @media screen and (min-width: 40rem) {}
+  @media screen and (min-width: 40rem) {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+  }
 }
 
-.product {}
+.product {
+  grid-column: span 12;
+  background-color: var(--page-foreground-color);
+  padding: var(--space-s);
+  border-radius: var(--space-xs);
+}
 
-.product__link {}
+.product__link {
+  display: grid;
+}
 
 .product__title {
+  justify-self: start;
 
   .product__link:hover & {}
 }
 
-.product__price {}
+.product__price {
+  justify-self: start;
+}
 
 .product__img {
+  justify-self: center;
 
   .product__link:hover & {}
 }
